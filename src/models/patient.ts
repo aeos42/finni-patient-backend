@@ -6,6 +6,7 @@ export interface IPatient extends Document {
   address: string;
   dateOfBirth: Date;
   status: string;
+  extra_fields: Record<string, any>;
 }
 
 const patientSchema: Schema = new Schema({
@@ -14,6 +15,7 @@ const patientSchema: Schema = new Schema({
   address: { type: String, required: true },
   dateOfBirth: { type: Date, required: true },
   status: { type: String, required: true },
+  extra_fields: { type: Map, of: Schema.Types.Mixed, default: {} }
 });
 
 export default mongoose.model<IPatient>('Patient', patientSchema);
