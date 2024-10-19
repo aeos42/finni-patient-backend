@@ -29,7 +29,7 @@ router.post('/', async (req: Request, res: Response) => {
 // Get all patients
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const patients = await Patient.find();
+    const patients = await Patient.find({}, { __v: 0, _id: 0 });
     const patientCount = patients.length;
     console.log(`Retrieved ${patientCount} patients`);
     res.json(patients);

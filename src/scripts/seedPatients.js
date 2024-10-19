@@ -49,6 +49,11 @@ var samplePatients = [
         address: '123 Main St, Anytown, USA',
         dateOfBirth: new Date('1980-01-15'),
         status: 'Active',
+        extra_fields: {
+            phoneNumber: '555-123-4567',
+            emergencyContact: 'Jane Doe',
+            bloodType: 'A+',
+        },
     },
     {
         firstName: 'Jane',
@@ -56,6 +61,11 @@ var samplePatients = [
         address: '456 Elm St, Othertown, USA',
         dateOfBirth: new Date('1992-07-22'),
         status: 'Inactive',
+        extra_fields: {
+            preferredLanguage: 'Spanish',
+            occupation: 'Teacher',
+            allergies: ['Peanuts', 'Penicillin'],
+        },
     },
     {
         firstName: 'Alice',
@@ -63,6 +73,11 @@ var samplePatients = [
         address: '789 Oak Ave, Somewhere, USA',
         dateOfBirth: new Date('1975-03-10'),
         status: 'Active',
+        extra_fields: {
+            insuranceProvider: 'HealthCare Plus',
+            lastCheckup: new Date('2023-11-15'),
+            chronicConditions: ['Diabetes Type 2', 'Hypertension'],
+        },
     },
     // Add more sample patients as needed
 ];
