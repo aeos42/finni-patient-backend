@@ -18,6 +18,8 @@ router.post('/', async (req: Request, res: Response) => {
 router.get('/', async (req: Request, res: Response) => {
   try {
     const patients = await Patient.find();
+    const patientCount = patients.length;
+    console.log(`Retrieved ${patientCount} patients`);
     res.json(patients);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching patients', error });
