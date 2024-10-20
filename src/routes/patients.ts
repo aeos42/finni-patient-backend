@@ -6,12 +6,12 @@ const router = express.Router();
 // Create a new patient
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { extra_fields, ...patientData } = req.body;
+    const { extraFields, ...patientData } = req.body;
     const patient = new Patient(patientData);
     
-    if (extra_fields) {
-      Object.entries(extra_fields).forEach(([key, value]) => {
-        patient.extra_fields.set(key, value);
+    if (extraFields) {
+      Object.entries(extraFields).forEach(([key, value]) => {
+        patient.extraFields.set(key, value);
       });
     }
 
@@ -38,26 +38,42 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-// Update a patient
-router.patch('/:id', async (req: Request, res: Response) => {
+router.get('/:patientId', async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const { extra_fields, ...updateData } = req.body;
-    
-    const patient = await Patient.findById(id);
+    const { patientId } = req.params;
+    const patient = await Patient.findOne({ patientId }, { __v: 0, _id: 0 });
+    res.json(patient);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching patients', error });
+  }
+});
+
+
+
+// Update a patient
+router.patch('/:patientId', async (req: Request, res: Response) => {
+  console.log("patching patient")
+  try {
+    const { patientId } = req.params;
+    const { extraFields, ...updateData } = req.body;
+
+    const patient = await Patient.findOne({ patientId });
     if (!patient) {
       return res.status(404).json({ message: 'Patient not found' });
     }
-
+    else {
+      
+    }
     Object.assign(patient, updateData);
 
-    if (extra_fields) {
-      Object.entries(extra_fields).forEach(([key, value]) => {
-        patient.extra_fields.set(key, value);
+    if (extraFields) {
+      Object.entries(extraFields).forEach(([key, value]) => {
+        patient.extraFields.set(key, value);
       });
     }
-
     await patient.save();
+    delete patient._id;
+    delete patient.__v;
     res.json(patient);
   } catch (error) {
     if (error instanceof Error) {

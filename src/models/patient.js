@@ -9,7 +9,7 @@ var patientSchema = new mongoose_1.Schema({
     address: { type: String, required: true },
     dateOfBirth: { type: Date, required: true },
     status: { type: String, required: true },
-    extra_fields: { type: Map, of: mongoose_1.Schema.Types.Mixed, default: {} }
+    extraFields: { type: Map, of: mongoose_1.Schema.Types.Mixed, default: {} }
 });
 function genUniqueId() {
     return (0, uuid_1.v4)();
