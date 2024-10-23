@@ -4,9 +4,11 @@ import * as path from 'path';
 import Patient from '../models/patient';
 import { config } from '../config';
 
-console.log(config.db.username)
+console.log(config.db.username);
 // Connect to your MongoDB database
-mongoose.connect(`mongodb://${config.db.username}:${config.db.password}@localhost:27017/patientsDB`);
+mongoose.connect(
+  `mongodb://${config.db.username}:${config.db.password}@localhost:27017/patientsDB`,
+);
 
 // Read patients from JSON file
 const patientsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'patients.json'), 'utf-8'));

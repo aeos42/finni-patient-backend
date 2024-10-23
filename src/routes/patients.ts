@@ -10,7 +10,7 @@ router.post('/', async (req: Request, res: Response) => {
   try {
     const { extraFields, ...patientData } = req.body;
     const patient = new Patient(patientData);
-    
+
     if (extraFields) {
       Object.entries(extraFields).forEach(([key, value]) => {
         patient.extraFields.set(key, value);
@@ -49,8 +49,6 @@ router.get('/:patientId', async (req: Request, res: Response) => {
   }
 });
 
-
-
 // Update a patient
 router.patch('/:patientId', async (req: Request, res: Response) => {
   logger.info('Updating patient', { patientId: req.params.patientId, updateData: req.body });
@@ -62,7 +60,7 @@ router.patch('/:patientId', async (req: Request, res: Response) => {
     if (!patient) {
       return res.status(404).json({ message: 'Patient not found' });
     }
-    
+
     Object.assign(patient, updateData);
 
     if (extraFields) {
@@ -100,6 +98,5 @@ router.delete('/:patientId', async (req: Request, res: Response) => {
     }
   }
 });
-
 
 export default router;

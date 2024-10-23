@@ -8,10 +8,7 @@ import patientRoutes from './routes/patients';
 // Create a logger
 export const logger = winston.createLogger({
   level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
     new winston.transports.Console(),
     new winston.transports.File({ filename: 'error.log', level: 'error' }),
@@ -22,7 +19,6 @@ export const logger = winston.createLogger({
 const app = express();
 const port = 3000;
 connectDB();
-
 
 app.use(express.json());
 app.use(cors());
@@ -48,7 +44,6 @@ app.use('/patients', patientRoutes);
 app.get('/', cors(corsOptions), (req, res) => {
   res.send('Patient Records API');
 });
-
 
 app.listen(port, () => {
   logger.info(`Finni patient server running on port ${port}`);

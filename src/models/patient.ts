@@ -18,7 +18,7 @@ const patientSchema: Schema = new Schema({
   address: { type: String, required: true },
   dateOfBirth: { type: Date, required: true },
   status: { type: String, required: true },
-  extraFields: { type: Map, of: Schema.Types.Mixed, default: {} }
+  extraFields: { type: Map, of: Schema.Types.Mixed, default: {} },
 });
 
 function genUniqueId() {
