@@ -1,10 +1,12 @@
 import express, { Request, Response } from 'express';
 import Patient from '../models/patient';
+import { logger } from '../index'; // You'll need to export the logger from index.ts
 
 const router = express.Router();
 
 // Create a new patient
 router.post('/', async (req: Request, res: Response) => {
+  logger.info('Creating new patient', { patientData: req.body });
   try {
     const { extraFields, ...patientData } = req.body;
     const patient = new Patient(patientData);
@@ -30,8 +32,7 @@ router.post('/', async (req: Request, res: Response) => {
 router.get('/', async (req: Request, res: Response) => {
   try {
     const patients = await Patient.find({}, { __v: 0, _id: 0 });
-    const patientCount = patients.length;
-    console.log(`Retrieved ${patientCount} patients`);
+    logger.info(`Retrieved ${patients.length} patients`);
     res.json(patients);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching patients', error });
@@ -52,7 +53,6 @@ router.get('/:patientId', async (req: Request, res: Response) => {
 
 // Update a patient
 router.patch('/:patientId', async (req: Request, res: Response) => {
-  console.log("patching patient")
   try {
     const { patientId } = req.params;
     const { extraFields, ...updateData } = req.body;
@@ -83,5 +83,26 @@ router.patch('/:patientId', async (req: Request, res: Response) => {
     }
   }
 });
+
+// Delete a patient
+router.delete('/:patientId', async (req: Request, res: Response) => {
+  try {
+    const { patientId } = req.params;
+    const deletedPatient = await Patient.findOneAndDelete({ patientId });
+
+    if (!deletedPatient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+
+    res.json({ message: 'Patient deleted successfully', patient: deletedPatient });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: 'Error deleting patient', error: error.message });
+    } else {
+      res.status(500).json({ message: 'An unknown error occurred while deleting patient' });
+    }
+  }
+});
+
 
 export default router;

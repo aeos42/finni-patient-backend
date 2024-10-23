@@ -37,50 +37,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
+var fs = require("fs");
+var path = require("path");
 var patient_1 = require("../models/patient");
 var config_1 = require("../config");
 console.log(config_1.config.db.username);
 // Connect to your MongoDB database
 mongoose_1.default.connect("mongodb://".concat(config_1.config.db.username, ":").concat(config_1.config.db.password, "@localhost:27017/patientsDB"));
-var samplePatients = [
-    {
-        firstName: 'John',
-        lastName: 'Doe',
-        address: '123 Main St, Anytown, USA',
-        dateOfBirth: new Date('1980-01-15'),
-        status: 'Active',
-        extraFields: {
-            phoneNumber: '555-123-4567',
-            emergencyContact: 'Jane Doe',
-            bloodType: 'A+',
-        },
-    },
-    {
-        firstName: 'Jane',
-        lastName: 'Smith',
-        address: '456 Elm St, Othertown, USA',
-        dateOfBirth: new Date('1992-07-22'),
-        status: 'Inactive',
-        extraFields: {
-            preferredLanguage: 'Spanish',
-            occupation: 'Teacher',
-            allergies: ['Peanuts', 'Penicillin'],
-        },
-    },
-    {
-        firstName: 'Alice',
-        lastName: 'Johnson',
-        address: '789 Oak Ave, Somewhere, USA',
-        dateOfBirth: new Date('1975-03-10'),
-        status: 'Active',
-        extraFields: {
-            insuranceProvider: 'HealthCare Plus',
-            lastCheckup: new Date('2023-11-15'),
-            chronicConditions: ['Diabetes Type 2', 'Hypertension'],
-        },
-    },
-    // Add more sample patients as needed
-];
+// Read patients from JSON file
+var patientsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'patients.json'), 'utf-8'));
 function seedPatients() {
     return __awaiter(this, void 0, void 0, function () {
         var insertedPatients, error_1;
@@ -93,7 +58,7 @@ function seedPatients() {
                 case 1:
                     // Clear existing patients
                     _a.sent();
-                    return [4 /*yield*/, patient_1.default.insertMany(samplePatients)];
+                    return [4 /*yield*/, patient_1.default.insertMany(patientsData)];
                 case 2:
                     insertedPatients = _a.sent();
                     console.log("".concat(insertedPatients.length, " patients inserted successfully."));
