@@ -33,7 +33,7 @@ def generate_patient():
         "lastName": random.choice(last_names),
         "address": f"{random.randint(100, 999)} {random.choice(streets)}, {random.choice(cities)}, {random.choice(states)}",
         "dateOfBirth": generate_random_date(datetime(1940, 1, 1), datetime(2005, 12, 31)).isoformat(),
-        "status": random.choice(["Active", "Inactive"]),
+        "status": random.choice(["Active", "Onboarding", "Churned", "Inquiry"]),
         "extraFields": {}
     }
 
@@ -44,9 +44,9 @@ def generate_patient():
 
     return patient
 
-patients = [generate_patient() for _ in range(100)]
+patients = [generate_patient() for _ in range(250)]
 
 with open('patients.json', 'w') as f:
     json.dump(patients, f, indent=2)
 
-print("patients.json file has been generated with 100 random patients.")
+print(f"patients.json file has been generated with {len(patients)} random patients.")

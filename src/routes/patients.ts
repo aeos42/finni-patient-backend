@@ -53,6 +53,7 @@ router.get('/:patientId', async (req: Request, res: Response) => {
 
 // Update a patient
 router.patch('/:patientId', async (req: Request, res: Response) => {
+  logger.info('Updating patient', { patientId: req.params.patientId, updateData: req.body });
   try {
     const { patientId } = req.params;
     const { extraFields, ...updateData } = req.body;
@@ -67,9 +68,7 @@ router.patch('/:patientId', async (req: Request, res: Response) => {
     Object.assign(patient, updateData);
 
     if (extraFields) {
-      Object.entries(extraFields).forEach(([key, value]) => {
-        patient.extraFields.set(key, value);
-      });
+      patient.extraFields = new Map(Object.entries(extraFields));
     }
     await patient.save();
     delete patient._id;
