@@ -62,9 +62,7 @@ router.patch('/:patientId', async (req: Request, res: Response) => {
     if (!patient) {
       return res.status(404).json({ message: 'Patient not found' });
     }
-    else {
-      
-    }
+    
     Object.assign(patient, updateData);
 
     if (extraFields) {

@@ -5,6 +5,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "mongoose": "^8.7.1",
+    "typescript-eslint": "^8.11.0",
     "uuid": "^10.0.0",
     "winston": "^3.15.0"
   },
@@ -31,8 +32,8 @@
     "dev": "ts-node src/index.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.ts\""
   },
   "author": "Adam Siefkas",
